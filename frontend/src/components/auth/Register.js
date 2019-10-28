@@ -1091,3 +1091,12 @@ export class Register extends Component {
     )
   }
 }
+const mapStateToProps = state => ({
+  isAuthenticated: state.authReducer.isAuthenticated,
+  error: state.errors
+});
+
+export default connect(
+  mapStateToProps,
+  { signup }
+)(Register);
