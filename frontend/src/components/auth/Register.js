@@ -543,3 +543,28 @@ class RegisterStepFive extends Component {
     )
   }
 }
+class RegisterStepSix extends Component {
+
+  goBack() {
+    this.props.jumpToStep(this.props.step-1);
+  }
+
+  render() {
+
+    if (this.props.isAuthenticated) {
+      return (
+        <h2>
+          Thank you for registering to Telemonica, we will get back to you soon to start the project. If you have any question please contact us. 
+        </h2>
+      )
+    } else {
+      return (
+        <h2 className="center">
+          We are sorry, we could not register you. The error was<br/>
+          <label className="error-message">{serverErrors}</label><br/> 
+          Please try again by clicking <span className="go-back pointer" onClick={() => this.props.jumpToStep(0)}>here</span>
+        </h2>
+      )
+    }
+  }
+}
