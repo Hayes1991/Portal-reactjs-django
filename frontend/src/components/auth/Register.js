@@ -278,3 +278,55 @@ class RegisterStepTwo extends Component {
     )
   }
 }
+class RegisterStepThree extends Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  goBack() {
+    this.props.jumpToStep(this.props.step-1);
+  }
+
+   isValidated() {
+  //   this.props.validateDate(this.props.newUser.date);
+  //   this.props.validateMonth(this.props.newUser.month);
+  //   this.props.validateYear(this.props.newUser.year);
+    this.props.validateField('password', this.props.newUser.password);
+
+    return this.props.validation.password;
+   }
+
+
+  render() {
+    
+    return (
+      <form className="pure-form pure-form-stacked register-width">
+       
+
+        
+        <div>
+        {/* <label className="right error-message">{this.props.formErrors.date}</label> */}
+        </div>
+        <label className="left" htmlFor="passcode">Password</label>
+        <div className="validation-input">
+        <Tooltip
+                            visible={this.props.formErrors.password.length > 0}
+                            trigger={[]}
+                            overlayStyle={{ zIndex: 1000 }}
+                            overlay={<span>{this.props.formErrors.password}</span>}
+                        >
+          <input id="register-passcode" name="password" value={this.props.newUser.password} onChange={this.props.onChange} className="passcode" type="password" />
+          </Tooltip>
+          <span className={'checkmark ' + ((this.props.validation.password) ? '' : 'hide')}>
+            <div className="checkmark_circle"></div>
+            <div className="checkmark_stem"></div>
+            <div className="checkmark_kick"></div>
+          </span>
+        </div>
+        {/* <label className="right error-message">{this.props.formErrors.password}</label> */}
+
+      </form>
+    )
+  }
+}
