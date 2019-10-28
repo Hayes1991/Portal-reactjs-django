@@ -1,7 +1,9 @@
 ## Summary
 Portal website for patients
-Backend: Django 
-Frontend: Reactjs
+    
+    Backend: Django
+    
+    Frontend: Reactjs
 
 ## Instructions
 For running django backend
