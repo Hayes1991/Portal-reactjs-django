@@ -479,3 +479,67 @@ class RegisterStepFour extends Component {
     )
   }
 }
+class RegisterStepFive extends Component {
+
+  goBack() {
+    this.props.jumpToStep(this.props.step-1);
+  }
+
+  isValidated() {
+
+    this.props.validateSpeciality(this.props.newUser.speciality);
+    
+    if (this.props.validation.speciality) {
+      let newUser = this.props.newUser;
+      newUser.state = newUser.state.value
+      newUser.country = newUser.country.value
+      newUser.speciality = newUser.speciality.value
+      newUser.dob = newUser.year.value + '-' + newUser.month.value + '-' + newUser.date.value
+
+      this.props.signup(newUser)
+    }
+
+    return this.props.validation.speciality;
+  }
+
+  render() {
+    let specialities = [
+      { value: 'special1', label: 'Special One' },
+      { value: 'special2', label: 'Special Two' },
+    ];
+    return (
+      <form className="pure-form pure-form-stacked register-width">
+        <div>
+
+          <label className="left" htmlFor="speciality">Speciality</label>        <Tooltip
+                            visible={this.props.formErrors.speciality.length > 0}
+                            trigger={[]}
+                            overlayStyle={{ zIndex: 1000 }}
+                            overlay={<span>{this.props.formErrors.speciality}</span>}
+                        >
+          <Select name={"speciality"} value={this.props.newUser.speciality} onChange={this.props.onSpecialityChange} isSearchable={false} isClearable={false} classNamePrefix="speciality-single" options={specialities} placeholder={'Select Speciality'} />
+          </Tooltip>
+          <span className={'checkmark speciality-select-checkmark ' + ((this.props.validation.speciality) ? '' : 'hide')}>
+            <div className="checkmark_circle"></div>
+            <div className="checkmark_stem"></div>
+            <div className="checkmark_kick"></div>
+          </span>
+          <span className={'checkmark speciality-select-checkmark ' + ((this.props.formErrors.speciality.length > 0) ? '' : 'hide')}>
+              <div className="checkmark_circle_error"></div>
+              <div className="checkmark_stem_error"></div>
+              <div className="checkmark_kick_error"></div>
+            </span>
+        </div>
+
+        <label className="left other" htmlFor="other">Disease of interest</label>
+        <div className="validation-input">
+          <input id="other" className="register-width" type="text" />
+
+        </div>
+        { <div className="center signin-gap">
+                    <button type="submit" className="form-button center">Register</button>
+                </div> }
+      </form>
+    )
+  }
+}
