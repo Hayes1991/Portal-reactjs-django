@@ -4,6 +4,8 @@ Portal website for patients
     Backend: Django
     
     Frontend: Reactjs
+    
+    url : 13.210.255.105:8000
 
 ## Instructions
 For running django backend
