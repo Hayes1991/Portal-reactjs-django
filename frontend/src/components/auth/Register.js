@@ -536,9 +536,9 @@ class RegisterStepFive extends Component {
           <input id="other" className="register-width" type="text" />
 
         </div>
-        { <div className="center signin-gap">
+        {/* <div className="center signin-gap">
                     <button type="submit" className="form-button center">Register</button>
-                </div> }
+    </div>*/ }
       </form>
     )
   }
