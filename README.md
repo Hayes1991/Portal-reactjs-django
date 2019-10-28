@@ -1,5 +1,9 @@
 ## Summary
-MVP for telemedicine, known as **Monica**.
+Portal website for patients
+    
+    Backend: Django
+    
+    Frontend: Reactjs
 
 ## Instructions
 For running django backend
@@ -23,7 +27,3 @@ The API functions are in:
     authentication/api.py
     authentication/urls.py
 
-## Users
-
-* doctor_1@test.com (12345678)
-* patient_1@test.com (12345678)
