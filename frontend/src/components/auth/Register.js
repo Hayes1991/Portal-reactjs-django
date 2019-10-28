@@ -330,3 +330,152 @@ class RegisterStepThree extends Component {
     )
   }
 }
+class RegisterStepFour extends Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  goBack() {
+    this.props.jumpToStep(this.props.step-1);
+  }
+
+  isValidated() {
+    this.props.validateState(this.props.newUser.state);
+    this.props.validateCountry(this.props.newUser.country);
+    this.props.validateField('address', this.props.newUser.address);
+    this.props.validateField('city', this.props.newUser.city);
+    this.props.validateField('postcode', this.props.newUser.postcode);
+    
+    return this.props.validation.address && this.props.validation.city && this.props.validation.state && this.props.validation.postcode && this.props.validation.country;
+  }
+
+  render() {
+
+    let states = [
+      {
+        value: "NSW",
+        label: "NSW",
+      },
+      {
+        value: "NY",
+        label: "NY",
+      }
+    ];
+
+    let countries = [
+      { value: 'australia', label: 'Australia' },
+      { value: 'belgium', label: 'Belgium' },
+      { value: 'germany', label: 'Germany' },
+    ];
+
+    return (
+      <form className="pure-form pure-form-stacked">
+
+        <label className="left" htmlFor="address">Address</label>
+        <div className="validation-input">
+        <Tooltip
+                            visible={this.props.formErrors.address.length > 0}
+                            trigger={[]}
+                            overlayStyle={{ zIndex: 1000 }}
+                            overlay={<span>{this.props.formErrors.address}</span>}
+                        >
+          <input id="register-address" name="address" value={this.props.newUser.address} onChange={this.props.onChange} className="address register-width" type="text" />
+          </Tooltip>
+          <span className={'checkmark ' + ((this.props.validation.address) ? '' : 'hide')}>
+            <div className="checkmark_circle"></div>
+            <div className="checkmark_stem"></div>
+            <div className="checkmark_kick"></div>
+          </span>
+          <span className={'checkmark ' + ((this.props.formErrors.address.length > 0) ? '' : 'hide')}>
+              <div className="checkmark_circle_error"></div>
+              <div className="checkmark_stem_error"></div>
+              <div className="checkmark_kick_error"></div>
+            </span>
+          {/* <label className="error-message">{this.props.formErrors.address}</label> */}
+        </div>
+
+        <div className="validation-input">
+          <div className="city">
+            <label className="left" htmlFor="city">City</label>
+
+            <input id="city" name="city" value={this.props.newUser.city} onChange={this.props.onChange} type="text" />
+            <span className={'checkmark ' + ((this.props.validation.city) ? '' : 'hide')}>
+              <div className="checkmark_circle"></div>
+              <div className="checkmark_stem"></div>
+              <div className="checkmark_kick"></div>
+            </span>
+            <span className={'checkmark ' + ((this.props.formErrors.city.length > 0) ? '' : 'hide')}>
+              <div className="checkmark_circle_error"></div>
+              <div className="checkmark_stem_error"></div>
+              <div className="checkmark_kick_error"></div>
+            </span>
+          </div>
+          <div className="state">
+            <label className="left" htmlFor="state">State</label>
+            <Select name={"state"} value={this.props.newUser.state} onChange={this.props.onStateChange} isSearchable={false} isClearable={false} classNamePrefix="state-single" options={states} placeholder={'State'} />
+            <span className={'checkmark state-select-checkmark ' + ((this.props.validation.state) ? '' : 'hide')}>
+              <div className="checkmark_circle"></div>
+              <div className="checkmark_stem"></div>
+              <div className="checkmark_kick"></div>
+            </span>
+            <span className={'checkmark state-select-checkmark ' + (this.props.formErrors.state.length > 0 ? '' : 'hide')}>
+                            <div className="checkmark_circle_error"></div>
+                            <div className="checkmark_stem_error"></div>
+                            <div className="checkmark_kick_error"></div>
+                        </span>
+          </div>
+          <div className="postcode">
+            <label className="left" htmlFor="postcode">Postcode</label>
+            <Tooltip
+                            visible={this.props.formErrors.city.length > 0||
+                              this.props.formErrors.state.length > 0||
+                              this.props.formErrors.postcode.length > 0}
+                            trigger={[]}
+                            overlayStyle={{ zIndex: 1000 }}
+                            overlay={<span>
+                              <div>{this.props.formErrors.city}</div> 
+                              <div>{this.props.formErrors.state}</div>
+                              <div>{this.props.formErrors.postcode}</div>
+                              </span>}
+                        >
+            <input id="postcode" name="postcode" value={this.props.newUser.postcode} onChange={this.props.onChange} type="text" />
+            </Tooltip>
+            <span className={'checkmark ' + ((this.props.validation.postcode) ? '' : 'hide')}>
+              <div className="checkmark_circle"></div>
+              <div className="checkmark_stem"></div>
+              <div className="checkmark_kick"></div>
+            </span>
+            <span className={'checkmark ' + ( this.props.formErrors.postcode.length > 0 ? '' : 'hide')}>
+                            <div className="checkmark_circle_error"></div>
+                            <div className="checkmark_stem_error"></div>
+                            <div className="checkmark_kick_error"></div>
+                        </span>
+          </div>
+
+        </div>
+        <div>
+          <label className="left" htmlFor="country">Country</label>
+          <Tooltip
+                            visible={this.props.formErrors.country.length > 0}
+                            trigger={[]}
+                            overlayStyle={{ zIndex: 1000 }}
+                            overlay={<span>{this.props.formErrors.country}</span>}
+                        >
+          <Select name={"country"} value={this.props.newUser.country} onChange={this.props.onCountryChange} isSearchable={false} isClearable={false} classNamePrefix="country-single" options={countries} placeholder={'Select Country'} />
+          </Tooltip>
+          <span className={'checkmark country-select-checkmark ' + ((this.props.validation.country) ? '' : 'hide')}>
+            <div className="checkmark_circle"></div>
+            <div className="checkmark_stem"></div>
+            <div className="checkmark_kick"></div>
+          </span>
+          <span className={'checkmark country-select-checkmark ' + (this.props.formErrors.country.length > 0 ? '' : 'hide')}>
+                            <div className="checkmark_circle_error"></div>
+                            <div className="checkmark_stem_error"></div>
+                            <div className="checkmark_kick_error"></div>
+                        </span>
+        </div>
+      </form>
+    )
+  }
+}
