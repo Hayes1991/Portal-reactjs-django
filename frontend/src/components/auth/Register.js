@@ -568,3 +568,526 @@ class RegisterStepSix extends Component {
     }
   }
 }
+export class Register extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      percentage: 48,
+      step: 0,
+      newUser: {
+        first_name: "",
+        last_name: "",
+        email: "",
+        phone: "",
+        date: "",
+        month: '',
+        year: '',
+        password: "",
+        address: "",
+        city: "",
+        state: "",
+        postcode: "",
+        country: "",
+        speciality: "",
+        other: "",
+      },
+      formErrors: {
+        first_name: "",
+        last_name: "",
+        email: "",
+        phone: "",
+        date: "",
+        month: '',
+        year: '',
+        password: "",
+        address: "",
+        city: "",
+        state: "",
+        postcode: "",
+        country: "",
+        speciality: "",
+        other: "",
+      },
+      validation: {
+        first_name: false,
+        last_name: false,
+        email: false,
+        phone: false,
+        date: false,
+        month: false,
+        year: false,
+        password: false,
+        address: false,
+        city: false,
+        state: false,
+        postcode: false,
+        country: false,
+        speciality: false,
+        other: false,
+      },
+      formValid: false,
+      serverErrors: []
+    }
+
+    this.onChange = this.onChange.bind(this);
+    this.onDateChange = this.onDateChange.bind(this);
+    
+    this.validateField = this.validateField.bind(this);
+
+    this.validateDate = this.validateDate.bind(this);
+    this.validateMonth = this.validateMonth.bind(this);
+    this.validateYear = this.validateYear.bind(this);
+    this.validateCountry = this.validateCountry.bind(this);
+    this.validateState = this.validateState.bind(this);
+    this.validateSpeciality = this.validateSpeciality.bind(this);
+  }
+
+  stepRef = React.createRef();
+
+  stepChange = (step) => {
+    var stepPercentageMapping = {
+      0: 48,
+      1: 62,
+      2: 74,
+      3: 80,
+      4: 99,
+      5: 100
+    }
+
+    this.setState({ 
+      step: step,
+      percentage: stepPercentageMapping[step]
+     });
+  }
+
+  onChange = e => {
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState({
+      newUser: {
+        ...this.state.newUser,
+        [name]: value
+      }
+    },
+      () => { this.validateField(name, value) }
+    )
+  }
+
+  onDateChange = args => {
+    const value = args;
+    this.setState({
+      newUser: {
+        ...this.state.newUser,
+        date: value
+      }
+    },
+      () => { this.validateDate(value) }
+    )
+  }
+
+  onMonthChange = args => {
+    const value = args;
+    this.setState({
+      newUser: {
+        ...this.state.newUser,
+        month: value
+      }
+    },
+      () => { this.validateMonth(value) }
+    )
+  }
+
+  onYearChange = args => {
+    const value = args;
+    this.setState({
+      newUser: {
+        ...this.state.newUser,
+        year: value
+      }
+    },
+      () => { this.validateYear(value) }
+    )
+  }
+
+  onStateChange = args => {
+    const value = args;
+    this.setState({
+      newUser: {
+        ...this.state.newUser,
+        state: value
+      }
+    },
+      () => { this.validateState(value) }
+    )
+  }
+
+  onCountryChange = args => {
+    const value = args;
+    this.setState({
+      newUser: {
+        ...this.state.newUser,
+        country: value
+      }
+    },
+      () => { this.validateCountry(value) }
+    )
+  }
+
+  onSpecialityChange = args => {
+    const value = args;
+    this.setState({
+      newUser: {
+        ...this.state.newUser,
+        speciality: value
+      }
+    },
+      () => { this.validateSpeciality(value) }
+    )
+  }
+
+  validateField(fieldName, value) {
+
+    switch (fieldName) {
+      case 'first_name':
+        this.validatefirst_name(value);
+        break;
+      case 'last_name':
+        this.validatelast_name(value);
+        break;
+      case 'email':
+        this.validateEmail(value);
+        break;
+      case 'password':
+        this.validatePassword(value);
+        break;
+      case 'address':
+        this.validateAddress(value);
+        break;
+      case 'city':
+        this.validateCity(value);
+        break;
+      case 'postcode':
+        this.validatePostcode(value);
+        break;
+      case 'phone':
+        this.validatePhone(value);
+        break;
+      default:
+        break;
+    }
+  }
+
+  validatefirst_name(first_name) {
+    let fieldValidationErrors = this.state.formErrors
+    let first_nameValid = this.state.validation.first_name;
+
+    first_nameValid = first_name.length > 0;
+    fieldValidationErrors.first_name = first_nameValid ? '' : 'First name is required';
+
+    this.setState({
+      formErrors: fieldValidationErrors,
+      validation: {
+        ...this.state.validation,
+        first_name: first_nameValid
+      }
+    }, this.validateForm);
+  }
+
+  validatelast_name(last_name) {
+    let fieldValidationErrors = this.state.formErrors
+    let last_nameValid = this.state.validation.last_name;
+
+    last_nameValid = last_name.length > 0;
+    fieldValidationErrors.last_name = last_nameValid ? '' : 'Last name is required';
+
+    this.setState({
+      formErrors: fieldValidationErrors,
+      validation: {
+        ...this.state.validation,
+        last_name: last_nameValid
+      }
+    }, this.validateForm);
+  }
+
+  validateAddress(address) {
+    let fieldValidationErrors = this.state.formErrors
+    let addressValid = this.state.validation.address;
+
+    addressValid = address.length > 0;
+    fieldValidationErrors.address = addressValid ? '' : 'Cannot be blank';
+
+    this.setState({
+      formErrors: fieldValidationErrors,
+      validation: {
+        ...this.state.validation,
+        address: addressValid
+      }
+    }, this.validateForm);
+  }
+
+  validateCity(city) {
+    let fieldValidationErrors = this.state.formErrors
+    let cityValid = this.state.validation.city;
+
+    cityValid = city.length > 0;
+    fieldValidationErrors.city = cityValid ? '' : 'City cannot be blank';
+
+    this.setState({
+      formErrors: fieldValidationErrors,
+      validation: {
+        ...this.state.validation,
+        city: cityValid
+      }
+    }, this.validateForm);
+  }
+
+  validatePostcode(postcode) {
+    let fieldValidationErrors = this.state.formErrors
+    let postcodeValid = this.state.validation.postcode;
+    
+    let re = /^\d+$/
+
+    postcodeValid = postcode.length > 0;
+    fieldValidationErrors.postcode = postcodeValid ? '' : 'Postcode is required';
+    if(postcode.length > 0){
+      postcodeValid = re.test(postcode)
+      fieldValidationErrors.postcode = postcodeValid ? '' : 'Invalid postcode';
+    }
+
+    this.setState({
+      formErrors: fieldValidationErrors,
+      validation: {
+        ...this.state.validation,
+        postcode: postcodeValid
+      }
+    }, this.validateForm);
+  }
+
+  validatePhone(phone) {
+    let fieldValidationErrors = this.state.formErrors
+    let phoneValid = this.state.validation.phone;
+
+    let re = /[\+0-9]+/
+    phoneValid = phone.length < 7;
+    fieldValidationErrors.phone = phoneValid ? 'Phone number is required' : '';
+    
+    // if(phone.length < 10){
+    //   phoneValid = re.test(phone)
+    //   fieldValidationErrors.phone = phoneValid ? '' : 'Invalid phone number';
+    // }
+
+    this.setState({
+      formErrors: fieldValidationErrors,
+      validation: {
+        ...this.state.validation,
+        phone: phoneValid
+      }
+    }, this.validateForm);
+  }
+
+  validateDate(date) {
+    let fieldValidationErrors = this.state.formErrors
+    let dateValid = this.state.validation.date;
+
+    dateValid = false;
+
+    if (typeof (date) === "object" && Object.keys(date).indexOf("value") > -1 && date.value.length > 0)
+      dateValid = true;
+
+    fieldValidationErrors.date = dateValid ? '' : 'Date cannot be blank';
+
+    this.setState({
+      formErrors: fieldValidationErrors,
+      validation: {
+        ...this.state.validation,
+        date: dateValid
+      }
+    }, this.validateForm);
+  }
+
+  validateMonth(month) {
+    let fieldValidationErrors = this.state.formErrors
+    let monthValid = this.state.validation.month;
+
+    monthValid = false;
+
+    if (typeof (month) === "object" && Object.keys(month).indexOf("value") > -1 && month.value.length > 0)
+      monthValid = true;
+
+    fieldValidationErrors.month = monthValid ? '' : 'Month cannot be blank';
+
+    this.setState({
+      formErrors: fieldValidationErrors,
+      validation: {
+        ...this.state.validation,
+        month: monthValid
+      }
+    }, this.validateForm);
+  }
+
+  validateYear(year) {
+    let fieldValidationErrors = this.state.formErrors
+    let yearValid = this.state.validation.year;
+
+    yearValid = false;
+
+    if (typeof (year) === "object" && Object.keys(year).indexOf("value") > -1 && year.value.length > 0)
+      yearValid = true;
+
+    fieldValidationErrors.year = yearValid ? '' : 'Year cannot be blank';
+
+    this.setState({
+      formErrors: fieldValidationErrors,
+      validation: {
+        ...this.state.validation,
+        year: yearValid
+      }
+    }, this.validateForm);
+  }
+
+  validateState(state) {
+    let fieldValidationErrors = this.state.formErrors
+    let stateValid = this.state.validation.state;
+
+    stateValid = false;
+
+    if (typeof (state) === "object" && Object.keys(state).indexOf("value") > -1 && (state.value > 0 || state.value.length > 0))
+      stateValid = true;
+
+    fieldValidationErrors.state = stateValid ? '' : 'State cannot be blank';
+
+    this.setState({
+      formErrors: fieldValidationErrors,
+      validation: {
+        ...this.state.validation,
+        state: stateValid
+      }
+    }, this.validateForm);
+  }
+
+  validateCountry(country) {
+    let fieldValidationErrors = this.state.formErrors
+    let countryValid = this.state.validation.country;
+
+    countryValid = false;
+
+    if (typeof (country) === "object" && Object.keys(country).indexOf("value") > -1 && country.value.length > 0)
+      countryValid = true;
+
+    fieldValidationErrors.country = countryValid ? '' : 'Cannot be blank';
+
+    this.setState({
+      formErrors: fieldValidationErrors,
+      validation: {
+        ...this.state.validation,
+        country: countryValid
+      }
+    }, this.validateForm);
+  }
+
+  validateSpeciality(speciality) {
+    let fieldValidationErrors = this.state.formErrors
+    let specialityValid = this.state.validation.speciality;
+
+    specialityValid = false;
+
+    if (typeof (speciality) === "object" && Object.keys(speciality).indexOf("value") > -1 && speciality.value.length > 0)
+      specialityValid = true;
+
+    fieldValidationErrors.speciality = specialityValid ? '' : 'Cannot be blank';
+
+    this.setState({
+      formErrors: fieldValidationErrors,
+      validation: {
+        ...this.state.validation,
+        speciality: specialityValid
+      }
+    }, this.validateForm);
+  }
+
+  validateEmail(email) {
+    let fieldValidationErrors = this.state.formErrors
+    let emailValid = this.state.emailValid;
+
+    emailValid = email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+    fieldValidationErrors.email = emailValid ? '' : 'Please enter a valid email address';
+
+    this.setState({
+      formErrors: fieldValidationErrors,
+      validation: {
+        ...this.state.validation,
+        email: emailValid
+      }
+    }, this.validateForm);
+  }
+
+  validatePassword(password) {
+    let fieldValidationErrors = this.state.formErrors
+    let passwordValid = this.state.passwordValid;
+
+    passwordValid = password.length >= 5;
+    fieldValidationErrors.password = passwordValid ? '' : 'Passcode must be 5 characters or more';
+
+    this.setState({
+      ...this.state,
+      formErrors: fieldValidationErrors,
+      validation: {
+        ...this.state.validation,
+        password: passwordValid
+      }
+    }, this.validateForm);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { error } = this.props;
+    if (error !== prevProps.error) {
+      if(Object.keys(error.msg).length===0){
+        this.setState({ serverErrors: ''})
+        return;
+      }
+      if (error.msg.non_field_errors) this.setState({ serverErrors: error.msg.non_field_errors.join() })
+      if (error.msg.email) this.setState({ serverErrors: error.msg.email.join() })
+    }
+  }
+
+  backToStep = () => {
+    this.stepRef.current.refs.activeComponent.goBack()
+  }
+
+  render() {
+
+    if (this.props.isAuthenticated) {
+      return <Redirect to="/dashboard" />;
+    }
+
+    const { serverErrors, isAuthenticated } = this.state;
+
+    const steps = [
+      { name: 'RegisterStepOne', component: <RegisterStepOne newUser={this.state.newUser} validation={this.state.validation} formErrors={this.state.formErrors} onChange={this.onChange} validateField={this.validateField} onDateChange={this.onDateChange} onMonthChange={this.onMonthChange} onYearChange={this.onYearChange} validateDate={this.validateDate} validateMonth={this.validateMonth} validateYear={this.validateYear} /> },
+      { name: 'RegisterStepTwo', component: <RegisterStepTwo step={this.state.step} newUser={this.state.newUser} validation={this.state.validation} formErrors={this.state.formErrors} onChange={this.onChange} validateField={this.validateField}/> },
+      { name: 'RegisterStepThree', component: <RegisterStepThree step={this.state.step} {...this.state} onChange={this.onChange}  validateField={this.validateField} /> },
+      { name: 'RegisterStepFour', component: <RegisterStepFour step={this.state.step} newUser={this.state.newUser} validation={this.state.validation} formErrors={this.state.formErrors} onChange={this.onChange} onStateChange={this.onStateChange} onCountryChange={this.onCountryChange} validateField={this.validateField} validateCountry={this.validateCountry} validateState={this.validateState} /> },
+      { name: 'RegisterStepFive', component: <RegisterStepFive step={this.state.step} newUser={this.state.newUser} validation={this.state.validation} formErrors={this.state.formErrors} onChange={this.onChange} onSpecialityChange={this.onSpecialityChange} signup={this.props.signup} validateSpeciality={this.validateSpeciality} /> },
+      { name: 'RegisterStepSix', component: <RegisterStepSix serverErrors={serverErrors} step={this.state.step}  newUser={this.state.newUser.first_name} isAuthenticated={isAuthenticated} /> }
+    ];
+
+    return (
+      <div>
+		<div className="icon-parent">
+			<img className='landing-icon' src="static/frontend/images/icon.png" />		
+		</div>
+		<div className="center-child register-width">
+          <p className="center signin">Register</p>
+          <StepZilla showSteps={false} nextButtonCls="form-button center" backButtonCls="prev-btn" steps={steps} onStepChange={this.stepChange} startAtStep={0} nextTextOnFinalActionStep={"Register"} ref={this.stepRef} />
+          <label className="error-message">{serverErrors}</label>
+          <div className="line-progress">
+            {this.state.step < 5 && <span> <Line percent={this.state.percentage} strokeWidth="3" strokeColor="#53206e" trailColor="#f4f4f4" /> {this.state.percentage}%</span>}
+                    </div>
+          {
+            (this.state.step!==5) && !isAuthenticated && <div className="center register-gap">Have an account? <span className="register"><Link to="/login">Sign In</Link></span></div>
+          }
+        </div>
+      </div>
+    )
+  }
+}
